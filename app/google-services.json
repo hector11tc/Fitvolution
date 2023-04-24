@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "253611867196",
+    "project_id": "uc3m-doc-230221-392-16504-g001",
+    "storage_bucket": "uc3m-doc-230221-392-16504-g001.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:253611867196:android:2f2f377dec7ca623c41739",
+        "android_client_info": {
+          "package_name": "com.example.fitvolution"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "253611867196-ht0r0vnf7trc2c3a6jgh320k4h9v9lsh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAw3BP481fV1H5s3tXguqbhvZG-3Cb2vJg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "253611867196-ht0r0vnf7trc2c3a6jgh320k4h9v9lsh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
