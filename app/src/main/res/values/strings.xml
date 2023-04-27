@@ -1,5 +1,17 @@
 <resources>
     <string name="app_name">Fitvolution</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="welcome">Welcome to FITVOLUTION</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forgotPassword">Did you forget your password?</string>
+    <string name="login">Log in</string>
+    <string name="resetPassword">Send Password</string>
+    <string name="accept">I have read and I accept</string>
+    <string name="terms">terms and conditions of use.</string>
+    <string name="invalid_email">Sorry, the introduced email is not valid...</string>
+
+    <string name="google">GOOGLE</string>
+    <string name="facebook">FACEBOOK</string>
+
 </resources>
