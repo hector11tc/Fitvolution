@@ -9,5 +9,8 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="green_fitvolution">#00E404</color>
+    <color name="clear_grey">#676464</color>
+    <color name="dark_grey">#3C3C3C</color>
+    <color name="orange">#FF8225</color>
 
 </resources>

@@ -5,8 +5,8 @@
     android:layout_height="match_parent"
     tools:context=".ProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/tvSignOut"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
@@ -14,6 +14,6 @@
         android:fontFamily="@font/righteous"
         android:textColor="@color/black"
         android:textSize="40sp"
-        android:text="Profile Fragment" />
+        android:text="@string/signOut" />
 
 </FrameLayout>

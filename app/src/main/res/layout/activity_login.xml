@@ -4,23 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="30dp"
     tools:context=".LoginActivity"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/dark_grey">
 
-
-
-<!--    <ImageView-->
-<!--        android:id="@+id/imageView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="207dp"-->
-<!--        android:src="@mipmap/logo_completo" />-->
 
     <TextView
         android:id="@+id/txtWelcome"
         style="@style/viewCustom"
-        android:paddingTop="20dp"
+        android:paddingTop="50dp"
         android:gravity="center_horizontal"
         android:text="@string/welcome"
         android:textSize="40sp"
@@ -36,23 +28,22 @@
         android:inputType="textEmailAddress"
         android:paddingTop="30dp"
         android:layout_marginTop="0dp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black"
-        android:backgroundTint="@color/black"/>
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:backgroundTint="@color/white"/>
 
     <EditText
         android:id="@+id/etPassword"
         style="@style/viewCustom"
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black"
-        android:backgroundTint="@color/black"/>
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:backgroundTint="@color/white"/>
 
     <TextView
         android:id="@+id/tvLogin"
         style="@style/viewCustom"
-        android:background="@color/black"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:paddingTop="7dp"
@@ -71,13 +62,13 @@
         android:gravity="center_horizontal"
         android:text="@string/forgotPassword"
         android:textSize="12sp"
-        android:textColor="@color/black"/>
+        android:textColor="@color/orange"/>
 
     <LinearLayout
         android:id="@+id/lyTerms"
         style="@style/viewCustom"
         android:orientation="horizontal"
-        android:background="@color/white">
+        android:background="@color/dark_grey">
         <CheckBox
             android:id="@+id/cbAcept"
             android:layout_width="wrap_content"
@@ -91,7 +82,7 @@
             android:layout_height="wrap_content"
             android:text="@string/terms"
             android:textSize="10sp"
-            android:textColor="@color/green_fitvolution"
+            android:textColor="@color/white"
             android:layout_marginLeft="5dp"
             android:onClick="goTerms"/>
     </LinearLayout>
@@ -102,13 +93,12 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@color/white"
         android:drawableLeft="@drawable/ic_google"
-        android:drawableTint="@color/white"
         android:text="@string/google"
         android:textAlignment="textStart"
-        android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textSize="18sp"
         android:paddingLeft="30dp"/>
 
     <Button
@@ -117,13 +107,12 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@color/white"
         android:drawableLeft="@drawable/ic_facebook"
-        android:drawableTint="@color/white"
         android:text="@string/facebook"
         android:textAlignment="textStart"
-        android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textSize="18sp"
         android:paddingLeft="30dp"/>
 
 </LinearLayout>

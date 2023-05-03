@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TermsActivity"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_main"
+        app:title="@string/terms_title"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/clear_grey"
+        app:layout_scrollFlags="scroll|enterAlways" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/term1"
+                style="@style/termsView"
+                android:text="@string/terms1" />
+
+            <TextView
+                android:id="@+id/term2"
+                style="@style/termsView"
+                android:text="@string/terms2" />
+
+            <TextView
+                android:id="@+id/term3"
+                style="@style/termsView"
+                android:text="@string/terms3" />
+
+            <TextView
+                android:id="@+id/term4"
+                style="@style/termsView"
+                android:text="@string/terms4" />
+
+            <TextView
+                android:id="@+id/term5"
+                style="@style/termsView"
+                android:text="@string/terms5" />
+
+            <TextView
+                android:id="@+id/term6"
+                style="@style/termsView"
+                android:text="@string/terms6" />
+
+            <TextView
+                android:id="@+id/term7"
+                style="@style/termsView"
+                android:text="@string/terms7" />
+
+            <TextView
+                android:id="@+id/term8"
+                style="@style/termsView"
+                android:text="@string/terms8" />
+
+            <TextView
+                android:id="@+id/term9"
+                style="@style/termsView"
+                android:text="@string/terms9" />
+
+            <TextView
+                android:id="@+id/term10"
+                style="@style/termsView"
+                android:text="@string/terms10" />
+
+            <TextView
+                android:id="@+id/term11"
+                style="@style/termsView"
+                android:text="@string/terms11" />
+
+            <TextView
+                android:id="@+id/term12"
+                style="@style/termsView"
+                android:text="@string/terms12" />
+
+            <TextView
+                android:id="@+id/term13"
+                style="@style/termsView"
+                android:text="@string/terms13" />
+
+            <TextView
+                android:id="@+id/term14"
+                style="@style/termsView"
+                android:text="@string/terms14" />
+
+            <TextView
+                android:id="@+id/term15"
+                style="@style/termsView"
+                android:text="@string/terms15" />
+
+            <TextView
+                android:id="@+id/term16"
+                style="@style/termsView"
+                android:text="@string/terms16" />
+
+            <TextView
+                android:id="@+id/term17"
+                style="@style/termsView"
+                android:text="@string/terms17" />
+
+            <TextView
+                android:id="@+id/term18"
+                style="@style/termsView"
+                android:text="@string/terms18" />
+
+            <TextView
+                android:id="@+id/term19"
+                style="@style/termsView"
+                android:text="@string/terms19" />
+
+            <TextView
+                android:id="@+id/term20"
+                style="@style/termsView"
+                android:text="@string/terms20" />
+
+            <Button
+                android:id="@+id/back_login"
+                style="@style/viewCustom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:backgroundTint="@color/clear_grey"
+                android:text="@string/close"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
+
+
+
