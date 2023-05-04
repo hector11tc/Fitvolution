@@ -99,7 +99,8 @@
         android:textAlignment="textStart"
         android:textColor="@color/black"
         android:textSize="18sp"
-        android:paddingLeft="30dp"/>
+        android:paddingLeft="30dp"
+        android:onClick="callSignInGoogle"/>
 
     <Button
         android:id="@+id/btSignFacebook"

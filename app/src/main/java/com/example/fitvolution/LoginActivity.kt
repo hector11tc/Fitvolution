@@ -14,6 +14,10 @@ import android.text.TextUtils
 import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.GoogleAuthProvider
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.Locale
@@ -37,6 +41,8 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var lyTerms: LinearLayout
 
     private lateinit var mAuth: FirebaseAuth
+
+    private var RESULT_CODE_GOOGLE_SIGN_IN = 100
 
 
 
@@ -95,6 +101,21 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    private fun addUserToDB(email: String){
+        val dateRegister = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
+
+        val dbRegister = FirebaseFirestore.getInstance()
+
+        val userDocument = hashMapOf(
+            "email" to email,
+            "dateRegister" to dateRegister
+        )
+
+        dbRegister.collection("users")
+            .document(email)
+            .set(userDocument)
+    }
+
     private fun register(){
         email = etEmail.text.toString()
         password = etPassword.text.toString()
@@ -103,19 +124,7 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener() {
                 if (it.isSuccessful){
                     val email = email
-                    val dateRegister = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
-
-                    val dbRegister = FirebaseFirestore.getInstance()
-
-                    val userDocument = hashMapOf(
-                        "email" to email,
-                        "dateRegister" to dateRegister
-                    )
-
-                    dbRegister.collection("users")
-                        .document(email)
-                        .set(userDocument)
-
+                    addUserToDB(email)
 
                     goMain(email, "email")
                 }
@@ -165,9 +174,50 @@ class LoginActivity : AppCompatActivity() {
         else Toast.makeText(this, "Please, indicate an email", Toast.LENGTH_SHORT).show()
     }
 
+    fun callSignInGoogle(view: View){
+        signInGoogle()
+    }
 
+    private fun signInGoogle(){
+        // Configure Google Sign In
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+
+        var googleSignInClient = GoogleSignIn.getClient(this, gso)
+        googleSignInClient.signOut()
+
+        startActivityForResult(googleSignInClient.signInIntent, RESULT_CODE_GOOGLE_SIGN_IN)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == RESULT_CODE_GOOGLE_SIGN_IN) {
+            try {
+                val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+                // Google Sign In was successful, authenticate with Firebase
+                val account = task.getResult(ApiException::class.java)!!
+
+                if (account != null) {
+                    email = account.email!!
+                    val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+                    mAuth.signInWithCredential(credential).addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            addUserToDB(email)
+                            goMain(email, "Google")
+                        }
+                        else Toast.makeText(this, "Google conexion failed", Toast.LENGTH_SHORT)
+                    }
+                }
+            } catch (e: ApiException) {
+                Toast.makeText(this, "Google conexion failed", Toast.LENGTH_SHORT)
+            }
+        }
+    }
 }
-
 
 
 

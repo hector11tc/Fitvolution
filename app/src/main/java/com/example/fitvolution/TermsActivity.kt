@@ -16,19 +16,10 @@ import com.google.firebase.auth.FirebaseAuth
         backButton.setOnClickListener {
             onBackPressed()
         }
-
 //        val toolbar: androidx.appcompat.widget.Toolbar = findViewById(R.id.toolbar_main)
 //        setSupportActionBar(toolbar)
 //        toolbar.title=getString(R.string.terms_title)
     }
-
-//    fun goLogIn(view: View){
-//        val intent = Intent(this, LoginActivity::class.java)
-//        startActivity(intent)
-//    }
-
-
-
 
 }
 

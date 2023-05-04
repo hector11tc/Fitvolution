@@ -7,13 +7,14 @@
 
     <TextView
         android:id="@+id/tvSignOut"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
+        android:layout_width="292dp"
+        android:layout_height="60dp"
         android:layout_marginTop="30dp"
+        android:drawableLeft="@drawable/ic_logout"
         android:fontFamily="@font/righteous"
+        android:gravity="center_horizontal"
+        android:text="@string/signOut"
         android:textColor="@color/black"
-        android:textSize="40sp"
-        android:text="@string/signOut" />
+        android:textSize="20sp" />
 
 </FrameLayout>
