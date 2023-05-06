@@ -16,7 +16,7 @@
 
     <style name="BottomNavigation">
         <item name="android:background">@color/green_fitvolution</item>
-        <item name="itemIconTint">@color/white</item>
-        <item name="itemTextColor">@color/white</item>
+        <item name="itemIconTint">@color/dark_grey</item>
+        <item name="itemTextColor">@color/dark_grey</item>
     </style>
 </resources>

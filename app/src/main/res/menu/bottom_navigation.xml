@@ -11,9 +11,9 @@
         android:title="Workout"/>
 
     <item
-        android:id="@+id/metrics_item"
-        android:icon="@drawable/ic_metrics"
-        android:title="Metrics"/>
+        android:id="@+id/exercises_item"
+        android:icon="@drawable/ic_exercises"
+        android:title="Exercises"/>
 
     <item
         android:id="@+id/profile_item"

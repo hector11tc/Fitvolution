@@ -17,6 +17,17 @@
     <string name="google">Continue with GOOGLE</string>
     <string name="facebook">Continue with FACEBOOK</string>
 
+    <string-array name="exercise_groups">
+        <item>Show all</item>
+        <item>Shoulders</item>
+        <item>Chest</item>
+        <item>Back</item>
+        <item>Arms</item>
+        <item>Abdomen</item>
+        <item>Buttocks</item>
+        <item>Legs</item>
+    </string-array>
+
     <string name="terms_title">Terms and conditions of use</string>
     <string name="terms1">Acceptance: By using or accessing our Android sports app ("App"), you agree to these Terms and Conditions ("Terms").</string>
     <string name="terms2">Eligibility: You must be at least 13 years old to use the App.</string>
