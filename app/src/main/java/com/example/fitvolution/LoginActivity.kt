@@ -1,5 +1,6 @@
 package com.example.fitvolution
 
+import android.content.ContentValues.TAG
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -11,6 +12,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlin.properties.Delegates
 import android.content.Intent
 import android.text.TextUtils
+import android.util.Log
 import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
@@ -101,20 +103,27 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun addUserToDB(email: String){
+    private fun addUserToDB(email: String) {
         val dateRegister = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
 
         val dbRegister = FirebaseFirestore.getInstance()
+        val auth = FirebaseAuth.getInstance()
+        val currentUser = auth.currentUser
 
-        val userDocument = hashMapOf(
-            "email" to email,
-            "dateRegister" to dateRegister
-        )
+        if (currentUser != null) {
+            val userDocument = hashMapOf(
+                "email" to email,
+                "dateRegister" to dateRegister
+            )
 
-        dbRegister.collection("users")
-            .document(email)
-            .set(userDocument)
+            dbRegister.collection("users")
+                .document(currentUser.uid) // Usamos el UID en lugar del correo electrónico
+                .set(userDocument)
+        } else {
+            Log.e(TAG, "No se pudo obtener el usuario autenticado")
+        }
     }
+
 
     private fun register(){
         email = etEmail.text.toString()
