@@ -19,4 +19,9 @@
         <item name="itemIconTint">@color/dark_grey</item>
         <item name="itemTextColor">@color/dark_grey</item>
     </style>
+
+    <style name="AppBarMain" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:background">@color/green_fitvolution</item>
+        <item name="android:textColorPrimary">@color/dark_grey</item>
+    </style>
 </resources>
