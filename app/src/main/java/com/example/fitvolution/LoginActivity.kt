@@ -31,28 +31,35 @@ import java.util.Locale
 
 class LoginActivity : AppCompatActivity() {
 
+    // Variables for storing the user's email and the provider of their session
     companion object{
         lateinit var useremail: String
         lateinit var providerSession: String
     }
-
+    // Variables for storing the user's email and password input
     private var email by Delegates.notNull<String>()
     private var password by Delegates.notNull<String>()
+    // EditText variables for user input
     private lateinit var etEmail: EditText
     private lateinit var etPassword: EditText
+    // LinearLayout variable for displaying terms and conditions
     private lateinit var lyTerms: LinearLayout
 
+    // Firebase Authentication instance
     private lateinit var mAuth: FirebaseAuth
 
+    // Result code for Google Sign In
     private var RESULT_CODE_GOOGLE_SIGN_IN = 100
 
 
-
+    // Function that sets up the activity when it's first created
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        lyTerms = findViewById(R.id.lyTerms)
+        // Initializing variables and setting up text watchers to handle changes in EditTexts
+        // Also managing the login button state according to the inputs
+                lyTerms = findViewById(R.id.lyTerms)
         lyTerms.visibility = View.INVISIBLE
 
         etEmail = findViewById(R.id.etEmail)
@@ -64,6 +71,7 @@ class LoginActivity : AppCompatActivity() {
         etPassword.doOnTextChanged { text, start, before, count -> manageButtonLogin() }
     }
 
+    // Function that checks if a user is already signed in when the activity starts
     public override fun onStart() {
         super.onStart()
 
@@ -72,7 +80,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
-//    función para que, una vez iniciada la sesión, si el usuario da al botón "back", no volver al activity_login
+    // Function that changes the behavior of the "back" button to prevent navigating back to LoginActivity
     override fun onBackPressed() {
         val startMain = Intent(Intent.ACTION_MAIN)
         startMain.addCategory(Intent.CATEGORY_HOME)
@@ -80,6 +88,7 @@ class LoginActivity : AppCompatActivity() {
         startActivity(startMain)
     }
 
+    // Function that manages the state of the Login button depending on the user input
     private fun manageButtonLogin(){
         var tvLogin = findViewById<TextView>(R.id.tvLogin)
         email = etEmail.text.toString()
@@ -95,6 +104,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    // Function that navigates to the main activity
     private fun goMain(email: String, provider: String){
         useremail = email
         providerSession = provider
@@ -103,6 +113,7 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    // Function that adds a new user to the Firestore database
     private fun addUserToDB(email: String) {
         val dateRegister = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
 
@@ -125,6 +136,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
+    // Function that registers a new user with Firebase Authentication
     private fun register(){
         email = etEmail.text.toString()
         password = etPassword.text.toString()
@@ -141,10 +153,12 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
+    // Function that's called when the login button is clicked. It calls the loginUser function
     fun login(view: View){
         loginUser()
     }
 
+    // Function that signs in a user with Firebase Authentication
     private fun loginUser(){
         email = etEmail.text.toString()
         password = etPassword.text.toString()
@@ -168,15 +182,18 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
+    // Function that navigates to the terms and conditions activity
     fun goTerms(v: View){
         val intent = Intent(this, TermsActivity::class.java)
         startActivity(intent)
     }
 
+    // Function that sends a password reset email
     fun forgotPassword(v: View){
         resetPassword()
     }
 
+    // Function that sends a password reset email using Firebase Authentication
     private fun resetPassword(){
         val e = etEmail.text.toString()
         if (!TextUtils.isEmpty(e)){
@@ -189,10 +206,12 @@ class LoginActivity : AppCompatActivity() {
         else Toast.makeText(this, "Please, indicate an email", Toast.LENGTH_SHORT).show()
     }
 
+    // Function that initiates the Google Sign In process
     fun callSignInGoogle(view: View){
         signInGoogle()
     }
 
+    // Function that configures and initiates the Google Sign In process
     private fun signInGoogle(){
         // Configure Google Sign In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -206,6 +225,7 @@ class LoginActivity : AppCompatActivity() {
         startActivityForResult(googleSignInClient.signInIntent, RESULT_CODE_GOOGLE_SIGN_IN)
     }
 
+    // Function that handles the result of the Google Sign In process
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
