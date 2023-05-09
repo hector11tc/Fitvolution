@@ -16,6 +16,7 @@ class ExerciseAdapter(private val exercises: MutableList<Exercise>) :
         val imageView: ImageView = itemView.findViewById(R.id.exercise_image)
         val nameTextView: TextView = itemView.findViewById(R.id.exercise_name)
         val groupTextView: TextView = itemView.findViewById(R.id.exercise_group)
+        val secGroupTextView: TextView = itemView.findViewById(R.id.exercise_sec_group)
     }
 
     // Método para inflar la vista de la tarjeta de ejercicio y crear un ViewHolder
@@ -30,6 +31,7 @@ class ExerciseAdapter(private val exercises: MutableList<Exercise>) :
         val exercise = exercises[position]
         holder.nameTextView.text = exercise.name
         holder.groupTextView.text = exercise.group
+        holder.secGroupTextView.text = exercise.sec_group
 
         // Obtener el identificador de recurso de la imagen basado en la ruta de la imagen en la base de datos
         val imageResource = holder.itemView.context.resources.getIdentifier(

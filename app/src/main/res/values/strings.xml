@@ -20,11 +20,11 @@
     <string name="fitvolutioner_since">Fitvolutioner since %s</string>
     <string name="metrics">Corporal metrics:</string>
     <string name="add_metrics">Add new metrics</string>
-    <string name="height_hint">In cm</string>
-    <string name="weight_hint">Kg</string>
-    <string name="body_fat_hint">%</string>
-    <string name="body_water_hint">%</string>
-    <string name="muscle_mass_hint">Kg</string>
+    <string name="height_hint">Height (in cm)</string>
+    <string name="weight_hint">Weight (in Kg)</string>
+    <string name="body_fat_hint">Body fat (%)</string>
+    <string name="body_water_hint">Body water (%)</string>
+    <string name="muscle_mass_hint">Muscle mass (in Kg)</string>
     <string name="nothing">You do not have any metric stored</string>
 
     <string name="add_workout">Add new workout</string>
