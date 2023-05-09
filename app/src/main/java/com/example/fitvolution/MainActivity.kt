@@ -32,9 +32,6 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         val fragment: Fragment
         val itemId = item.itemId
         fragment = when (itemId) {
-            R.id.running_item -> {
-                RunningFragment()
-            }
             R.id.workout_item -> {
                 WorkoutFragment()
             }
@@ -56,7 +53,6 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     private fun updateToolbarTitle(fragment: Fragment) {
         val title = when (fragment) {
-            is RunningFragment -> "Running"
             is WorkoutFragment -> "Workout"
             is ExercisesFragment -> "Exercises"
             is ProfileFragment -> "Profile"
@@ -67,7 +63,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     private fun showWorkoutFragment() {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.running_fragment, WorkoutFragment())
+        transaction.replace(R.id.profile_fragment, WorkoutFragment())
         transaction.commit()
     }
 }
