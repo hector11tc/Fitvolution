@@ -1,20 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ProfileFragment">
 
-    <TextView
-        android:id="@+id/tvSignOut"
-        android:layout_width="292dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="30dp"
-        android:drawableLeft="@drawable/ic_logout"
-        android:fontFamily="@font/righteous"
-        android:gravity="center_horizontal"
-        android:text="@string/signOut"
-        android:textColor="@color/black"
-        android:textSize="20sp" />
+    <ImageView
+        android:id="@+id/ivLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_logout" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/text_view_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_person"
+        android:drawablePadding="8dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/ivLogout"
+        android:layout_marginTop="25dp"
+        tools:text="user@example.com"/>
+
+
+    <TextView
+        android:id="@+id/text_view_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_view_email"
+        android:textSize="16sp"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"
+        tools:text="Fitvolutioner since 01/01/2023" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/text_view_date"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@android:color/darker_gray" />
+
+    <TextView
+        android:id="@+id/text_view_metrics"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_metrics"
+        android:drawablePadding="8dp"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:layout_below="@+id/divider"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="16dp"
+        android:text="@string/metrics" />
+
+    <TextView
+        android:id="@+id/text_view_height"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_view_metrics"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"
+        android:layout_marginStart="16dp"
+        tools:text="Height: 175 cm" />
+
+    <TextView
+        android:id="@+id/text_view_weight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_view_height"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"
+        android:layout_marginStart="16dp"
+        tools:text="Weight: 70 kg" />
+
+    <TextView
+        android:id="@+id/text_view_bodyFat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_view_weight"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"
+        android:layout_marginStart="16dp"
+        tools:text="Body fat: 15%" />
+
+    <TextView
+        android:id="@+id/text_view_bodyWater"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_view_bodyFat"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"
+        android:layout_marginStart="16dp"
+        tools:text="Body water: 60%" />
+
+    <TextView
+        android:id="@+id/text_view_muscleMass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_view_bodyWater"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"
+        android:layout_marginStart="16dp"
+        tools:text="Muscle mass: 50 kg" />
+
+    <TextView
+        android:id="@+id/text_view_when_nothing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_view_metrics"
+        android:layout_above="@+id/text_view_muscleMass"
+        android:text="@string/nothing"
+        android:textSize="18sp"
+        android:gravity="center"/>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddMetrics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="@color/green_fitvolution"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/add_metrics"
+        android:src="@drawable/ic_add_metrics" />
+
+</RelativeLayout>
+
