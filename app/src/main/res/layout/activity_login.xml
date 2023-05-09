@@ -12,7 +12,7 @@
     <TextView
         android:id="@+id/txtWelcome"
         style="@style/viewCustom"
-        android:paddingTop="50dp"
+        android:paddingTop="60dp"
         android:gravity="center_horizontal"
         android:text="@string/welcome"
         android:textSize="40sp"
@@ -101,19 +101,5 @@
         android:textSize="18sp"
         android:paddingLeft="30dp"
         android:onClick="callSignInGoogle"/>
-
-    <Button
-        android:id="@+id/btSignFacebook"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:backgroundTint="@color/white"
-        android:drawableLeft="@drawable/ic_facebook"
-        android:text="@string/facebook"
-        android:textAlignment="textStart"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:paddingLeft="30dp"/>
 
 </LinearLayout>
