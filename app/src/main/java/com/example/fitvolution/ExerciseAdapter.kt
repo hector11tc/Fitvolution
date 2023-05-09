@@ -7,11 +7,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-// Adaptador para mostrar la lista de ejercicios en un RecyclerView
+// Adapter for displaying the exercise list in a RecyclerView
 class ExerciseAdapter(private val exercises: MutableList<Exercise>) :
     RecyclerView.Adapter<ExerciseAdapter.ViewHolder>() {
 
-    // ViewHolder para contener las vistas de cada elemento de la lista de ejercicios
+    // ViewHolder to contain the views of each item in the exercise list
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.findViewById(R.id.exercise_image)
         val nameTextView: TextView = itemView.findViewById(R.id.exercise_name)
@@ -19,35 +19,35 @@ class ExerciseAdapter(private val exercises: MutableList<Exercise>) :
         val secGroupTextView: TextView = itemView.findViewById(R.id.exercise_sec_group)
     }
 
-    // Método para inflar la vista de la tarjeta de ejercicio y crear un ViewHolder
+    // Method to inflate the view of the exercise card and create a ViewHolder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.exercise_card, parent, false)
         return ViewHolder(view)
     }
 
-    // Método para vincular los datos del ejercicio con las vistas del ViewHolder
+    // Method to link the exercise data to the ViewHolder views
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val exercise = exercises[position]
         holder.nameTextView.text = exercise.name
         holder.groupTextView.text = exercise.group
         holder.secGroupTextView.text = exercise.sec_group
 
-        // Obtener el identificador de recurso de la imagen basado en la ruta de la imagen en la base de datos
+        // Get the resource identifier of the image based on the path to the image in the database
         val imageResource = holder.itemView.context.resources.getIdentifier(
             exercise.image, "drawable", holder.itemView.context.packageName
         )
 
-        // Establecer la imagen en el ImageView
+        // Set the image in the ImageView
         holder.imageView.setImageResource(imageResource)
     }
 
-    // Método para obtener la cantidad de elementos en la lista de ejercicios
+    // Method for obtaining the number of items in the exercise list
     override fun getItemCount(): Int {
         return exercises.size
     }
 
-    // Método para actualizar la lista de ejercicios en el adaptador y notificar cambios
+    // Method for updating the list of exercises in the adapter and reporting changes
     fun updateExercises(newExercises: List<Exercise>) {
         exercises.clear()
         exercises.addAll(newExercises)

@@ -128,7 +128,7 @@ class LoginActivity : AppCompatActivity() {
             )
 
             dbRegister.collection("users")
-                .document(currentUser.uid) // Usamos el UID en lugar del correo electrónico
+                .document(currentUser.uid) // We use UID instead the email
                 .set(userDocument)
         } else {
             Log.e(TAG, "No se pudo obtener el usuario autenticado")

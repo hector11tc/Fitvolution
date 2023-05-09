@@ -22,13 +22,13 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 
 
-// Esta es la clase de fragmento que maneja la pantalla de la lista de rutinas de entrenamiento
-class WorkoutFragment : Fragment() {
+// This is the kind of fragment that handles the display of the list of training routines.
+class  WorkoutFragment : Fragment() {
 
-    // Referencia al adaptador que maneja la lista de rutinas de entrenamiento en el RecyclerView
+    // Reference to the adapter that handles the list of training routines in the RecyclerView
     private lateinit var workoutsAdapter: WorkoutsAdapter
 
-    // onCreateView es llamada para inflar el layout del fragmento
+    // onCreateView is called to inflate the fragment's layout.
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,18 +36,18 @@ class WorkoutFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_workout, container, false)
     }
 
-    // onResume es llamado cuando el fragmento está listo para interactuar con el usuario
-    // En este caso, se utiliza para recargar la lista de rutinas de entrenamiento cada vez que el fragmento se muestra
+    // onResume is called when the fragment is ready to interact with the user.
+    // In this case, it is used to reload the list of training routines each time the snippet is displayed.
     override fun onResume() {
         super.onResume()
-        loadWorkoutsFromFirestore() // Recargar la lista de workouts
+        loadWorkoutsFromFirestore() // Reload workout list
     }
 
-    // onViewCreated es llamada después de que la vista del fragmento se ha creado
+    // onViewCreated is called after the fragment's view has been created
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Inicializamos el adaptador de rutinas de entrenamiento con las funciones que se llamarán cuando se haga clic en los botones de eliminar y favorito
+        // We initialise the training routine adapter with the functions that will be called when the delete and favourite buttons are clicked
         workoutsAdapter = WorkoutsAdapter(
             onDeleteButtonClick = { workoutId ->
                 deleteWorkoutAndReload(workoutId)
@@ -57,40 +57,40 @@ class WorkoutFragment : Fragment() {
             }
         )
 
-        // Configuramos el RecyclerView con el adaptador de rutinas de entrenamiento y un LinearLayoutManager
+        // We set up the RecyclerView with the training routine adapter and a LinearLayoutManager.
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view_workouts)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = workoutsAdapter
 
-        // Configuramos el botón de agregar nueva rutina para iniciar NewWorkoutActivity cuando se haga clic en él
+        // Set the add new routine button to start NewWorkoutActivity when clicked on
         val fabNewWorkout = view.findViewById<FloatingActionButton>(R.id.fab_new_workout)
         fabNewWorkout.setOnClickListener {
             val intent = Intent(activity, NewWorkoutActivity::class.java)
             startActivity(intent)
         }
 
-        // Cargamos las rutinas de entrenamiento de Firestore
+        // We upload Firestore training routines
         loadWorkoutsFromFirestore()
     }
 
-    // Esta función carga las rutinas de entrenamiento del usuario actual de Firestore
+    // This function loads the training routines of the current Firestore user.
     private fun loadWorkoutsFromFirestore() {
         val auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser
         val firestore = FirebaseFirestore.getInstance()
 
-        // Realizamos una consulta a Firestore para obtener las rutinas de entrenamiento del usuario actual
+        // We query Firestore to obtain the current user's training routines.
         firestore.collection("workouts")
             .whereEqualTo("user", firestore.collection("users").document(currentUser?.uid!!))
             .get()
             .addOnSuccessListener { querySnapshot ->
                 Log.d(TAG, "Workout documents retrieved: ${querySnapshot.documents.size}")
 
-                // Transformamos los documentos de Firestore en objetos Workout y los añadimos a una lista
+                // We transform Firestore documents into Workout objects and add them to a list.
                 val workoutsList = querySnapshot.documents.map { document ->
                     val workout = document.toObject(Workout::class.java)!!.copy(id = document.id)
 
-                    // Para cada rutina de entrenamiento, cargamos sus ejercicios de Firestore
+                    // For each training routine, we load your exercises from Firestore
                     val exercisesRefList = workout.exercises
                     val exercisesList = mutableListOf<WtExercise>()
                     val deferredExercises = exercisesRefList.map { exerciseRef ->
@@ -104,17 +104,17 @@ class WorkoutFragment : Fragment() {
                         deferredExercises.awaitAll()
                     }
 
-                    // Actualizamos la lista de ejercicios de la rutina
+                    // We update the list of exercises in the routine
                     workout.exercisesList = exercisesList
                     Log.d(TAG, "Workout ${workout.name} exercises count: ${workout.exercisesList.size}")
                     workout
                 }
 
-                // Ordenamos las rutinas de entrenamiento para que las favoritas aparezcan primero
+                // We order the training routines so that the favourites appear first.
                 val sortedWorkouts = workoutsList.sortedByDescending { it.favourite }
                 Log.d(TAG, "Workouts retrieved: $sortedWorkouts")
 
-                // Actualizamos el adaptador del RecyclerView con las nuevas rutinas de entrenamiento
+                // We updated the RecyclerView adapter with the new training routines.
                 workoutsAdapter.updateWorkouts(sortedWorkouts)
             }
             .addOnFailureListener { exception ->
@@ -122,16 +122,15 @@ class WorkoutFragment : Fragment() {
             }
     }
 
-    // Esta función elimina una rutina de entrenamiento de Firestore y recarga la lista
+    // This function removes a training routine from the Firestore and reloads the list.
     private fun deleteWorkoutAndReload(workoutId: String) {
         val firestore = FirebaseFirestore.getInstance()
 
-        // Eliminamos la rutina de entrenamiento de Firestore
+        // We removed the training routine from Firestore
         firestore.collection("workouts")
             .document(workoutId)
             .delete()
             .addOnSuccessListener {
-                // Recargamos las rutinas de entrenamiento
                 loadWorkoutsFromFirestore()
             }
             .addOnFailureListener { exception ->
@@ -139,16 +138,15 @@ class WorkoutFragment : Fragment() {
             }
     }
 
-    // Esta función cambia el estado de favorito de una rutina de entrenamiento en Firestore y recarga la lista
+    // This function changes the favourite status of a training routine in Firestore and reloads the list.
     private fun toggleFavouriteAndUpdateFirestore(workout: Workout) {
         val firestore = FirebaseFirestore.getInstance()
 
-        // Actualizamos el estado de favorito de la rutina de entrenamiento en Firestore
+        // We updated the favourite status of the Firestore training routine.
         firestore.collection("workouts")
             .document(workout.id)
             .update("favourite", !workout.favourite)
             .addOnSuccessListener {
-                // Recargamos las rutinas de entrenamiento
                 loadWorkoutsFromFirestore()
             }
             .addOnFailureListener { exception ->

@@ -23,9 +23,10 @@ import java.util.*
 
 class ProfileFragment : Fragment() {
 
-    private lateinit var auth: FirebaseAuth
-    private lateinit var db: FirebaseFirestore
+    private lateinit var auth: FirebaseAuth  // Declare an instance of FirebaseAuth
+    private lateinit var db: FirebaseFirestore // Declare an instance of FirebaseFirestore
 
+    // This method is used to create and return the view hierarchy associated with the fragment.
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,11 +35,12 @@ class ProfileFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
 
+    // This method is called immediately after onCreateView() has returned, and fragment's view hierarchy has been instantiated.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        auth = FirebaseAuth.getInstance()
-        db = FirebaseFirestore.getInstance()
+        auth = FirebaseAuth.getInstance() // Initialize FirebaseAuth instance
+        db = FirebaseFirestore.getInstance() // Initialize FirebaseFirestore instance
 
         val textViewEmail = view.findViewById<TextView>(R.id.text_view_email)
         val textViewDate = view.findViewById<TextView>(R.id.text_view_date)
@@ -124,6 +126,7 @@ class ProfileFragment : Fragment() {
         }
     }
 
+    // This method retrieves the most recent metrics of the user from Firestore and displays them.
     private fun displayMetrics(
         textViewWhenNothing: TextView,
         textViewHeight: TextView,
@@ -168,10 +171,12 @@ class ProfileFragment : Fragment() {
     }
 
 
+    // This method is called when the sign out button is clicked.
     fun callSignOut(view: View){
         signOut()
     }
 
+    // This method signs out the current user and redirects them to the LoginActivity.
     private fun signOut(){
         FirebaseAuth.getInstance().signOut()
         startActivity(Intent(this@ProfileFragment.context, LoginActivity::class.java))

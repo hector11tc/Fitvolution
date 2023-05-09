@@ -17,7 +17,7 @@ import com.google.firebase.firestore.ktx.toObject
 
 
 
-// Fragmento que muestra la lista de ejercicios con un filtro de grupo
+// Excerpt showing the list of exercises with a group filter
 class ExercisesFragment : Fragment() {
 
     private lateinit var exercisesAdapter: ExerciseAdapter
@@ -25,7 +25,7 @@ class ExercisesFragment : Fragment() {
     private lateinit var groupSpinner: Spinner
     private var exerciseList: List<Exercise> = emptyList()
 
-    // Método para inflar la vista y configurar el RecyclerView y el Spinner
+    // Method for inflating the view and configuring the RecyclerView and the Spinner
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,27 +35,27 @@ class ExercisesFragment : Fragment() {
         groupSpinner = view.findViewById(R.id.spinner_group)
         exercisesRecyclerView = view.findViewById(R.id.recycler_view_exercises)
 
-        // Inicializar el adaptador y configurar el RecyclerView
+        // Initialising the adapter and configuring the RecyclerView
         exercisesAdapter = ExerciseAdapter(mutableListOf())
         exercisesRecyclerView.adapter = exercisesAdapter
         exercisesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        // Obtener los ejercicios de la base de datos
+        // Get the exercises from the database
         fetchExercises()
 
-        // Configurar el adaptador del Spinner y su evento OnItemSelectedListener
+        // Configuring the Spinner adapter and its OnItemSelectedListener event
         val spinnerAdapter = ArrayAdapter.createFromResource(requireContext(), R.array.exercise_groups, android.R.layout.simple_spinner_item)
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         groupSpinner.adapter = spinnerAdapter
 
         groupSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            // Filtrar la lista de ejercicios cuando se selecciona un grupo en el Spinner
+            // Filter the list of exercises when selecting a group in the Spinner
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val selectedGroup = parent?.getItemAtPosition(position).toString()
                 filterExercises(selectedGroup)
             }
 
-            // No hacer nada si no se selecciona ningún elemento en el Spinner
+            // Do nothing if no element is selected in the Spinner.
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
@@ -63,7 +63,7 @@ class ExercisesFragment : Fragment() {
         return view
     }
 
-    // Método para obtener la lista de ejercicios de Firestore
+    // Method to obtain the Firestore exercise list
     private fun fetchExercises() {
         val db = FirebaseFirestore.getInstance()
         db.collection("exercises")
@@ -75,7 +75,7 @@ class ExercisesFragment : Fragment() {
                     exercises.add(exercise)
                 }
                 exerciseList = exercises
-                // Filtrar la lista de ejercicios según el grupo seleccionado en el Spinner
+                // Filter the list of exercises according to the selected group in the Spinner
                 filterExercises(groupSpinner.selectedItem.toString())
             }
             .addOnFailureListener { exception ->
@@ -83,14 +83,14 @@ class ExercisesFragment : Fragment() {
             }
     }
 
-    // Método para filtrar la lista de ejercicios según el grupo seleccionado
+    // Method to filter the list of exercises according to the selected group
     private fun filterExercises(selectedGroup: String) {
         val filteredExercises = if (selectedGroup == "Show all") {
             exerciseList
         } else {
             exerciseList.filter { it.group == selectedGroup }
         }
-        // Actualizar el adaptador del RecyclerView con los ejercicios filtrados
+        // Update RecyclerView adapter with filtered exercises
         exercisesAdapter.updateExercises(filteredExercises)
     }
 

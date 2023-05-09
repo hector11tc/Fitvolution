@@ -31,9 +31,9 @@ import com.google.firebase.auth.FirebaseAuth
 
 
 
-// Esta actividad permite al usuario crear una nueva rutina de entrenamiento
+// This activity allows the user to create a new training routine.
 class NewWorkoutActivity : AppCompatActivity() {
-    // Definición de variables de instancia (Views y la lista de ejercicios)
+    // Definition of instance variables (Views and the exercise list)
     private lateinit var workoutNameEditText: EditText
     private lateinit var exercisesRecyclerView: RecyclerView
     private lateinit var addExerciseButton: Button
@@ -42,27 +42,27 @@ class NewWorkoutActivity : AppCompatActivity() {
     private val exercisesList = mutableListOf<WtExercise>()
     private lateinit var wtExercisesAdapter: WtExerciseAdapter
 
-    // Función onCreate, se ejecuta al crear la actividad
+    // onCreate function, executed when the activity is created
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_workout)
 
-        // Configuración de la barra de herramientas
+        // Toolbar configuration
         val toolbar: androidx.appcompat.widget.Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "New Workout"
 
-        // Inicialización de las vistas
+        // Initialisation of views
         workoutNameEditText = findViewById(R.id.editText_workout_name)
         exercisesRecyclerView = findViewById(R.id.recyclerView_exercises)
         addExerciseButton = findViewById(R.id.button_add_exercise)
         createWorkoutButton = findViewById(R.id.button_create_workout)
 
-        // Configuración del RecyclerView
+        // Configuration of RecyclerView
         setupRecyclerView()
 
-        // Listeners para los botones
+        // Listeners for buttons
         addExerciseButton.setOnClickListener {
             showAddExerciseDialog()
         }
@@ -72,30 +72,30 @@ class NewWorkoutActivity : AppCompatActivity() {
         }
     }
 
-    // Función para manejar la selección de elementos en la barra de herramientas
+    // Function to handle the selection of items in the toolbar
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                onBackPressed() // Al presionar el botón de retroceso, se finaliza la actividad actual y se regresa a la anterior
+                onBackPressed() // Pressing the back button ends the current activity and returns to the previous one.
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    // Configuración del RecyclerView
+    // Configuration of RecyclerView
     private fun setupRecyclerView() {
         wtExercisesAdapter = WtExerciseAdapter(exercisesList)
         exercisesRecyclerView.layoutManager = LinearLayoutManager(this)
         exercisesRecyclerView.adapter = wtExercisesAdapter
     }
 
-    // Función para mostrar el diálogo de agregar ejercicio
+    // Function to display the add exercise dialogue
     @SuppressLint("MissingInflatedId")
     private fun showAddExerciseDialog() {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_exercise, null)
 
-        // Configuración de los NumberPickers
+        // Configuration of NumberPickers
         val seriesPicker = dialogView.findViewById<NumberPicker>(R.id.number_picker_series)
         seriesPicker.minValue = 1
         seriesPicker.maxValue = 10
@@ -108,20 +108,20 @@ class NewWorkoutActivity : AppCompatActivity() {
         weightPicker.minValue = 1
         weightPicker.maxValue = 200
 
-        // Configuración del spinner de grupos de ejercicios
+        // Exercise group spinner configuration
         val groupSpinner: Spinner = dialogView.findViewById(R.id.spinner_group)
         val groupArray = resources.getStringArray(R.array.exercise_groups_no_show_all)
         val groupAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, groupArray)
         groupAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         groupSpinner.adapter = groupAdapter
 
-        // Configuración del spinner de ejercicios
+        // Exercise spinner configuration
         val exerciseSpinner: Spinner = dialogView.findViewById(R.id.spinner_exercise)
         val exerciseAdapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mutableListOf())
         exerciseAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         exerciseSpinner.adapter = exerciseAdapter
 
-        // Escuchar el cambio de selección en el spinner de grupo y actualizar el spinner de ejercicios en consecuencia
+        // Listen to the selection change in the group spinner and update the exercise spinner accordingly.
         groupSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val selectedGroup = groupArray[position]
@@ -145,7 +145,7 @@ class NewWorkoutActivity : AppCompatActivity() {
             }
         }
 
-        // Crear el AlertDialog para agregar ejercicio
+        // Create the AlertDialog to add exercise
         val alertDialog = AlertDialog.Builder(this)
             .setTitle("Add Exercise")
             .setView(dialogView)
@@ -168,24 +168,24 @@ class NewWorkoutActivity : AppCompatActivity() {
         alertDialog.show()
     }
 
-    // Función para guardar la rutina de entrenamiento en Firestore
+    // Function to save the training routine in Firestore
     private fun saveWorkoutToFirestore() {
         val workoutName = workoutNameEditText.text.toString()
 
         if (workoutName.isBlank() || exercisesList.isEmpty()) {
-            // Mostrar un mensaje de error si el nombre de la rutina está vacío o no hay ejercicios
+            // Display an error message if the routine name is empty or there are no exercises.
             return
         }
 
         GlobalScope.launch(Dispatchers.IO) {
-            // Guardar los ejercicios en Firestore
+            // Saving exercises in Firestore
             val wtExercisesRefs = exercisesList.map { exercise ->
                 val docRef = FirebaseFirestore.getInstance().collection("wt_exercises").document()
                 docRef.set(exercise).await()
                 docRef
             }
 
-            // Guardar la rutina en Firestore
+            // Saving the routine in Firestore
             val auth = FirebaseAuth.getInstance()
             val currentUser = auth.currentUser
 
@@ -202,14 +202,14 @@ class NewWorkoutActivity : AppCompatActivity() {
             withContext(Dispatchers.Main) {
                 Toast.makeText(this@NewWorkoutActivity, "New workout correctly created!", Toast.LENGTH_SHORT).show()
 
-                // Redireccionar al fragmento de rutinas en MainActivity
+                // Redirect to routines fragment in MainActivity
                 redirectToWorkoutFragment()
             }
         }
     }
 
 
-    // Función para redirigir al fragmento de rutinas
+    // Function to redirect to routine fragment
     private fun redirectToWorkoutFragment() {
         finish()
     }

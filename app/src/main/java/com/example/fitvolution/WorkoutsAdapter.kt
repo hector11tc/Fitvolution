@@ -14,26 +14,22 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 
-// Adaptador para el RecyclerView que muestra la lista de rutinas de entrenamiento
+// Adapter for RecyclerView showing the list of training routines
 class WorkoutsAdapter(
-    // Lista inicial de rutinas, puede ser actualizada posteriormente
     private var workouts: List<Workout> = listOf(),
-    // Callback que se llama cuando se hace click en el botón de eliminar
     private val onDeleteButtonClick: (String) -> Unit,
-    // Callback que se llama cuando se hace click en el botón de favorito
     private val onFavouriteButtonClick: (Workout) -> Unit
 ) : RecyclerView.Adapter<WorkoutsAdapter.ViewHolder>() {
 
-    // ViewHolder que contiene las vistas de cada elemento de la lista
+    // ViewHolder containing the views of each item in the list
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        // Referencias a las vistas dentro del elemento de la lista
         val workoutNameTextView: TextView = itemView.findViewById(R.id.text_view_workout_name)
         val exercisesRecyclerView: RecyclerView = itemView.findViewById(R.id.recycler_view_exercises)
         val deleteWorkoutButton: ImageButton = itemView.findViewById(R.id.delete_workout_button)
-        val favouriteButton: ImageView = itemView.findViewById(R.id.favourite_button) // Referencia al botón de favorito
+        val favouriteButton: ImageView = itemView.findViewById(R.id.favourite_button)
 
         init {
-            // Configuramos el botón de eliminación para que muestre un diálogo de confirmación cuando se haga clic en él
+            // Configure the delete button to display a confirmation dialog when clicked
             deleteWorkoutButton.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
@@ -41,7 +37,7 @@ class WorkoutsAdapter(
                 }
             }
 
-            // Configuramos el botón de favorito para que llame al callback correspondiente cuando se haga clic en él
+            // Set the bookmark button to call the corresponding callback when clicked on
             favouriteButton.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
@@ -51,95 +47,91 @@ class WorkoutsAdapter(
         }
     }
 
-    // Función que muestra un diálogo de confirmación antes de eliminar una rutina de entrenamiento
+    // Function to display a confirmation dialogue before deleting a training routine
     private fun showDeleteWorkoutConfirmationDialog(view: View, workout: Workout) {
-        // Construcción y configuración del diálogo
         val alertDialog = AlertDialog.Builder(view.context)
         alertDialog.setTitle("Eliminar rutina")
         alertDialog.setMessage("¿Estás seguro de que deseas eliminar esta rutina de ejercicios?")
         alertDialog.setPositiveButton("Sí") { _, _ ->
-            // Si el usuario confirma, llamamos al callback de eliminación
+            // If the user confirms, we call the delete callback
             onDeleteButtonClick(workout.id)
         }
         alertDialog.setNegativeButton("No", null)
         alertDialog.show()
     }
 
-    // Esta función se llama para crear un nuevo ViewHolder
+    // This function is called to create a new ViewHolder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        // Inflamos la vista del elemento de la lista a partir de su layout
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_workout_card, parent, false)
-        // Creamos y devolvemos el ViewHolder
+        // We create and return the ViewHolder
         return ViewHolder(view)
     }
 
-    // Esta función se llama para configurar un ViewHolder existente con los datos de una rutina de entrenamiento
+    // This function is called to configure an existing ViewHolder with data from a training routine.
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val workout = workouts[position]
 
-        // Configuramos las vistas con los datos de la rutina
+        // We set up the views with the data from the routine
         holder.workoutNameTextView.text = workout.name
         holder.workoutNameTextView.setTypeface(holder.workoutNameTextView.typeface, Typeface.BOLD)
         holder.workoutNameTextView.paintFlags = holder.workoutNameTextView.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
 
-        // Configuramos el botón de favorito con el estado correcto
+        // Set the bookmark button to the correct status
         if (workout.favourite) {
             holder.favouriteButton.setImageResource(R.drawable.ic_star_filled)
         } else {
             holder.favouriteButton.setImageResource(R.drawable.ic_star_outline)
         }
 
-        // Configuramos el RecyclerView anidado con la lista de ejercicios de la rutina
+        // We set up the nested RecyclerView with the list of exercises in the routine.
         val wtExercisesAdapter = WtExercisesAdapter(workout.exercisesList)
         holder.exercisesRecyclerView.layoutManager = LinearLayoutManager(holder.itemView.context)
         holder.exercisesRecyclerView.adapter = wtExercisesAdapter
     }
 
-    // Esta función devuelve el número de elementos en la lista
+    // This function returns the number of items in the list.
     override fun getItemCount(): Int = workouts.size
 
-    // Esta función actualiza la lista de rutinas y notifica al RecyclerView que los datos han cambiado
+    // This function updates the list of routines and notifies the RecyclerView that the data has changed.
     fun updateWorkouts(newWorkouts: List<Workout>) {
         workouts = newWorkouts
         notifyDataSetChanged()
     }
 }
 
-// Adaptador para el RecyclerView anidado que muestra la lista de ejercicios de una rutina
+// Adapter for nested RecyclerView showing the list of exercises in a routine
 class WtExercisesAdapter(private val exercises: List<WtExercise>) :
     RecyclerView.Adapter<WtExercisesAdapter.ViewHolder>() {
 
-    // ViewHolder que contiene las vistas de cada elemento de la lista
+    // ViewHolder containing the views of each item in the list
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        // Referencias a las vistas dentro del elemento de la lista
         val nameTextView: TextView = itemView.findViewById(R.id.text_view_name)
         val groupTextView: TextView = itemView.findViewById(R.id.text_view_group)
         val seriesRepsWeightTextView: TextView = itemView.findViewById(R.id.text_view_series_reps_weight)
     }
 
-    // Esta función se llama para crear un nuevo ViewHolder
+    // This function is called to create a new ViewHolder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        // Inflamos la vista del elemento de la lista a partir de su layout
+        // We inflate the view of the list item from its layout
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_wt_exercise, parent, false)
-        // Creamos y devolvemos el ViewHolder
         return ViewHolder(view)
     }
 
-    // Esta función se llama para configurar un ViewHolder existente con los datos de un ejercicio
+    // This function is called to set up an existing ViewHolder with data from an exercise.
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val exercise = exercises[position]
 
-        // Configuramos las vistas con los datos del ejercicio
+        // We set up the views with the exercise data.
         holder.nameTextView.text = exercise.name
         holder.nameTextView.setTypeface(holder.nameTextView.typeface, Typeface.BOLD)
         holder.groupTextView.text = exercise.group
         holder.seriesRepsWeightTextView.text = "${exercise.series}x ${exercise.reps}: ${exercise.weight}kg"
     }
 
-    // Esta función devuelve el número de elementos en la lista
+    // This function returns the number of items in the list.
     override fun getItemCount(): Int = exercises.size
 }
 
