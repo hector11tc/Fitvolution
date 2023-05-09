@@ -7,6 +7,7 @@
     <string name="password">Password</string>
     <string name="forgotPassword">Did you forget your password?</string>
     <string name="login">Log in</string>
+    <string name="signUp">Sign up</string>
     <string name="resetPassword">Send Password</string>
     <string name="accept">I have read and I accept</string>
     <string name="terms">terms and conditions of use.</string>

@@ -190,10 +190,11 @@ class NewWorkoutActivity : AppCompatActivity() {
             val currentUser = auth.currentUser
 
             val userRef = FirebaseFirestore.getInstance().collection("users").document(currentUser!!.uid)
-            val workout = hashMapOf(
-                "name" to workoutName,
-                "user" to userRef,
-                "exercises" to wtExercisesRefs
+            val workout = Workout(
+                name = workoutName,
+                user = userRef,
+                exercises = wtExercisesRefs,
+                favourite = false
             )
 
             FirebaseFirestore.getInstance().collection("workouts").add(workout).await()
@@ -207,15 +208,12 @@ class NewWorkoutActivity : AppCompatActivity() {
         }
     }
 
+
     // Función para redirigir al fragmento de rutinas
     private fun redirectToWorkoutFragment() {
-        val sharedPreferences = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.putBoolean("navigate_to_workout_fragment", true)
-        editor.apply()
-
         finish()
     }
+
 }
 
 

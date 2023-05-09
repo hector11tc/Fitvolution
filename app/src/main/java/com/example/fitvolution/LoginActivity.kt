@@ -153,7 +153,13 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener(this){ task ->
                 if (task.isSuccessful) goMain(email, "email")
                 else{
-                    if (lyTerms.visibility == View.INVISIBLE) lyTerms.visibility = View.VISIBLE
+                    if (lyTerms.visibility == View.INVISIBLE) {
+                        lyTerms.visibility = View.VISIBLE
+                        var tvLogin = findViewById<TextView>(R.id.tvLogin)
+                        tvLogin.text = resources.getString(R.string.signUp)
+                        Toast.makeText(this, "You don´t have an account. Please, accept the terms and conditions of use for sign up to Fitvolution!", Toast.LENGTH_LONG).show()
+
+                    }
                     else{
                         var cbAcept = findViewById<CheckBox>(R.id.cbAcept)
                         if (cbAcept.isChecked) register()
